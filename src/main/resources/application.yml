@@ -1,0 +1,22 @@
+#spring.devtools.restart.enabled=true
+z-mall:
+  api-package: com.wyu.zmall.api
+
+# java -jar xxx.jar --spring.profiles.active=dev 启动指定配置环境
+
+spring:
+  # TODO 2.4以上多配置文件推荐写法on-profile有点坑，某些情况会失效
+  profiles:
+    active: dev
+  jpa:
+    hibernate:
+      ddl-auto: none # create 和 create-drop会将原表删除再创建新的表，测试情况下会使用
+  # TODO 2.6版本更改了路由配置有些坑，解决方法设置 spring.mvc.pathmatch.matching-strategy 为 ant-path-matcher 或者倒回2.4版本
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  # jackson（SpringBoot内置）序列化配置
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    serialization:
+      write-dates-as-timestamps: true
