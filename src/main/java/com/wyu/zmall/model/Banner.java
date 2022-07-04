@@ -26,14 +26,14 @@ public class Banner extends BaseEntry{
 
     @OneToMany
     @JoinColumn(name = "bannerId")
-    private List<BannerItem> items;
+    private List<BannerItem> bannerItemList;
 
     public List<BannerItem> getItems() {
-        return items;
+        return bannerItemList;
     }
 
     public void setItems(List<BannerItem> items) {
-        this.items = items;
+        this.bannerItemList = items;
     }
 
     public Long getId() {

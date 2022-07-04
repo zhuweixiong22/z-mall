@@ -272,6 +272,12 @@ CREATE TABLE `sale_explain` (
 
 -- ----------------------------
 -- Table structure for sku
+-- decimal(10,2) 总位数和：10 小数部分：2 精度到分
+-- sku 的image只设置了一张
+-- specs
+-- code
+-- category ->(category_id、root_category_id) spu ->(spu_id) sku
+-- 为什么这里sku也设置了category_id、root_category_id，理论上是多余的，主要是考虑查询性能减少join查询，某种情况下可能直接通过category查询spu
 -- ----------------------------
 DROP TABLE IF EXISTS `sku`;
 CREATE TABLE `sku` (
@@ -345,7 +351,7 @@ CREATE TABLE `spec_value` (
 -- img: spu的图片
 -- discount_price：折扣价格和price一样是折扣价格
 -- tags: 小标签（可以设置成一对多）再提取出来一张表，这里选择只用一个字段使用一些符号拼接起来，优点：减少一次查询 缺点：更新麻烦，某些情况只能先查询再更改
--- is_test：无意义
+-- test：无意义
 -- ----------------------------
 -- ----------------------------
 DROP TABLE IF EXISTS `spu`;
@@ -366,7 +372,7 @@ CREATE TABLE `spu` (
                        `discount_price` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
                        `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
                        `tags` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-                       `is_test` tinyint(3) unsigned DEFAULT '0',
+                       `test` tinyint(3) unsigned DEFAULT '0',
                        `spu_theme_img` json DEFAULT NULL,
                        `for_theme_img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
                        PRIMARY KEY (`id`)
@@ -374,6 +380,8 @@ CREATE TABLE `spu` (
 
 -- ----------------------------
 -- Table structure for spu_detail_img
+-- spu详情页面下面的商品详细图 一个spu对多张详细图
+-- index：排序字段 详情图是有顺序的
 -- ----------------------------
 DROP TABLE IF EXISTS `spu_detail_img`;
 CREATE TABLE `spu_detail_img` (
@@ -389,6 +397,7 @@ CREATE TABLE `spu_detail_img` (
 
 -- ----------------------------
 -- Table structure for spu_img
+-- spu详情页面顶部的轮播图 一个spu对多张轮播图
 -- ----------------------------
 DROP TABLE IF EXISTS `spu_img`;
 CREATE TABLE `spu_img` (

@@ -11,7 +11,9 @@ public enum ResponseCode {
 
     PARAM_ERROR(10001, "参数错误"),
 
-    NOT_FOUND(30005, "Banner类资源不存在"),
+    SPU_NOT_FOUND(30003, "商品资源不存在"),
+
+    BANNER_NOT_FOUND(30005, "Banner类资源不存在"),
 
     ;
 

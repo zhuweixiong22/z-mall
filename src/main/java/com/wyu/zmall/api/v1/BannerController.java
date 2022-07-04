@@ -19,7 +19,7 @@ import javax.validation.constraints.NotBlank;
  */
 @RestController
 @RequestMapping("/banner")
-//@Validated // 写在类上只是开启非java bean的校验 若要对请求体进行校验还要在方法参数上加上
+@Validated // 写在类上只是开启非java bean的校验 若要对请求体进行校验还要在方法参数上加上
 public class BannerController {
 
     @Autowired

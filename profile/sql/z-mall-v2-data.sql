@@ -453,7 +453,7 @@ COMMIT;
 -- img: spu的图片
 -- discount_price：折扣价格和price一样是折扣价格
 -- tags: 小标签（可以设置成一对多）再提取出来一张表，这里选择只用一个字段使用一些符号拼接起来，优点：减少一次查询 缺点：更新麻烦，某些情况只能先查询再更改
--- is_test：无意义
+-- test：无意义
 -- ----------------------------
 DROP TABLE IF EXISTS `spu`;
 CREATE TABLE `spu` (
@@ -473,7 +473,7 @@ CREATE TABLE `spu` (
                        `discount_price` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
                        `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
                        `tags` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-                       `is_test` tinyint(3) unsigned DEFAULT '0',
+                       `test` tinyint(3) unsigned DEFAULT '0',
                        `spu_theme_img` json DEFAULT NULL,
                        `for_theme_img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
                        PRIMARY KEY (`id`)

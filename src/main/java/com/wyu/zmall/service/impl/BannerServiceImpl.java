@@ -22,7 +22,7 @@ public class BannerServiceImpl implements BannerService {
     public Banner getByName(String name) {
         Banner banner = bannerRepository.findOneByName(name);
         if (banner == null) {
-            throw new NotFoundException(ResponseCode.NOT_FOUND.getCode());
+            throw new NotFoundException(ResponseCode.BANNER_NOT_FOUND.getCode());
         }
         return banner;
     }

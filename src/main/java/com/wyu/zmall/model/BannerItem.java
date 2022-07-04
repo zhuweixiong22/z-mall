@@ -18,7 +18,7 @@ public class BannerItem extends BaseEntry{
 
     private String keyword;
 
-    private short type;
+    private Short type;
 
     private Long bannerId;
 
@@ -48,11 +48,11 @@ public class BannerItem extends BaseEntry{
         this.keyword = keyword;
     }
 
-    public short getType() {
+    public Short getType() {
         return type;
     }
 
-    public void setType(short type) {
+    public void setType(Short type) {
         this.type = type;
     }
 
