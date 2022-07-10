@@ -1,20 +1,19 @@
 package com.wyu.zmall.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 /**
  * @author zwx
- * @date 2022-07-03 21:09
+ * @date 2022-07-10 23:06
  */
 @Entity
+@Where(clause = "delete_time is null and online = 1")
 @Data
-public class Banner extends BaseEntry {
+public class Category extends BaseEntry{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
@@ -23,11 +22,15 @@ public class Banner extends BaseEntry {
 
     private String description;
 
-    private String title;
+    private Boolean isRoot;
+
+    private Long parentId;
 
     private String img;
 
-    @OneToMany
-    @JoinColumn(name = "bannerId")
-    private List<BannerItem> bannerItemList;
+    private Long sortOrder;
+
+    private Long online;
+
+    private Long level;
 }

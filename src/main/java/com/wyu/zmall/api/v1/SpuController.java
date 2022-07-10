@@ -33,7 +33,7 @@ public class SpuController {
     @Autowired
     private SpuService spuService;
 
-    @ApiOperation("获取商品详情")
+    @ApiOperation("根据id获取商品详情")
     @GetMapping("id/{id}/detail")
     public Spu getDetail(@PathVariable @Positive Long id) {
         return this.spuService.getSpuById(id);

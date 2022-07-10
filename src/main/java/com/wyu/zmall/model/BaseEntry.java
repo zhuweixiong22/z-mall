@@ -1,6 +1,7 @@
 package com.wyu.zmall.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.persistence.MappedSuperclass;
 import java.util.Date;
@@ -15,6 +16,7 @@ import java.util.Date;
  * @date 2022-07-03 21:40
  */
 @MappedSuperclass
+@Data
 public abstract class BaseEntry {
     @JsonIgnore
     private Date createTime;
@@ -24,28 +26,4 @@ public abstract class BaseEntry {
 
     @JsonIgnore
     private Date deleteTime;
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Date getDeleteTime() {
-        return deleteTime;
-    }
-
-    public void setDeleteTime(Date deleteTime) {
-        this.deleteTime = deleteTime;
-    }
 }

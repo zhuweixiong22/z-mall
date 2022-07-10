@@ -5,6 +5,7 @@ import com.wyu.zmall.bo.Spec;
 import com.wyu.zmall.util.GenericAndJsonConverter;
 import com.wyu.zmall.util.ListAndJsonConverter;
 import com.wyu.zmall.util.MapAndJsonConverter;
+import lombok.Data;
 import org.springframework.util.CollectionUtils;
 
 
@@ -18,6 +19,7 @@ import java.util.Map;
  * @date 2022-07-04 16:30
  */
 @Entity
+@Data
 public class Sku extends BaseEntry{
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,62 +61,6 @@ public class Sku extends BaseEntry{
     }
     */
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public BigDecimal getDiscountPrice() {
-        return discountPrice;
-    }
-
-    public void setDiscountPrice(BigDecimal discountPrice) {
-        this.discountPrice = discountPrice;
-    }
-
-    public Boolean getOnline() {
-        return online;
-    }
-
-    public void setOnline(Boolean online) {
-        this.online = online;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Long getSpuId() {
-        return spuId;
-    }
-
-    public void setSpuId(Long spuId) {
-        this.spuId = spuId;
-    }
-
     public List<Spec> getSpecs() {
         return GenericAndJsonConverter.jsonToObject(this.specs, new TypeReference<List<Spec>>() {
         });
@@ -125,37 +71,5 @@ public class Sku extends BaseEntry{
             return;
         }
         this.specs = GenericAndJsonConverter.objectToJson(specs);
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Long getStock() {
-        return stock;
-    }
-
-    public void setStock(Long stock) {
-        this.stock = stock;
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public Long getRootCategoryId() {
-        return rootCategoryId;
-    }
-
-    public void setRootCategoryId(Long rootCategoryId) {
-        this.rootCategoryId = rootCategoryId;
     }
 }
