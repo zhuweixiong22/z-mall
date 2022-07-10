@@ -142,7 +142,7 @@ CREATE TABLE `category` (
                             `is_root` tinyint(3) unsigned NOT NULL DEFAULT '0',
                             `parent_id` int(10) unsigned DEFAULT NULL,
                             `img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-                            `index` int(10) unsigned DEFAULT NULL,
+                            `sort_order` int(10) unsigned DEFAULT NULL,
                             `online` int(10) unsigned DEFAULT '1',
                             `level` int(10) unsigned DEFAULT NULL,
                             PRIMARY KEY (`id`)
@@ -279,10 +279,12 @@ CREATE TABLE `sale_explain` (
 -- Table structure for sku
 -- decimal(10,2) 总位数和：10 小数部分：2 精度到分
 -- sku 的image只设置了一张
--- specs
--- code
 -- category ->(category_id、root_category_id) spu ->(spu_id) sku
 -- 为什么这里sku也设置了category_id、root_category_id，理论上是多余的，主要是考虑查询性能减少join查询，某种情况下可能直接通过category查询spu
+-- code: 一个sku的唯一标识（相当于一种协议，是由我们自定义的spu_id$spec_key-spec_value#spec_key-spec_value），用主键id标识也是一种方案，但是用code码会更方便，具有程序可解析性，对服务端id和code码没有什么影响，但是对于前段解析来说code码会更方便
+-- stock：库存量，很多电商系统里，针对这个库存量还有一个单位（个、件、只）的概念，这个可以新建一张单位表、添加一个单位字段
+-- specs：sku最复杂的字段是规格，这个字段也是冗余的，由于spu-sku、spu-spec_key、sku-spec_value之间的关系，我们是可以一路查询出一个sku的spec信息的、显然这样查询是非常麻烦的，所以我们可以提前将这个spec信息写在sku表里
+-- 类是可以表达复杂结构的，在mysql里的体现就是json
 -- ----------------------------
 DROP TABLE IF EXISTS `sku`;
 CREATE TABLE `sku` (
@@ -306,6 +308,9 @@ CREATE TABLE `sku` (
 
 -- ----------------------------
 -- Table structure for sku_spec
+-- sku - spec_value 的多对多关系
+-- 该表相对于spu - spec_key的中间表多了几个字段，
+-- 其实多出的几个字段spu_id、key_id也是有点冗余
 -- ----------------------------
 DROP TABLE IF EXISTS `sku_spec`;
 CREATE TABLE `sku_spec` (
@@ -319,6 +324,10 @@ CREATE TABLE `sku_spec` (
 
 -- ----------------------------
 -- Table structure for spec_key
+-- 将规格名看做是一个实体
+-- name: 规格名的名字
+-- unit: 规格的单位，和sku表中stock中单位不是一个概念 对于手机来讲stock的单位是一台，而手机的规格有很多，比如手机尺寸就是一种规格，这时的规格单位就是尺寸的单位xx英寸
+-- standard: 是否是一种标准的规格，是人为规定的，带有主观性
 -- ----------------------------
 DROP TABLE IF EXISTS `spec_key`;
 CREATE TABLE `spec_key` (
@@ -335,6 +344,10 @@ CREATE TABLE `spec_key` (
 
 -- ----------------------------
 -- Table structure for spec_value
+-- spec_key : spec_value 一对多
+-- spec_id: 外键 spec_key表的主键
+-- value：具体规格的值
+-- extend：拓展字段
 -- ----------------------------
 DROP TABLE IF EXISTS `spec_value`;
 CREATE TABLE `spec_value` (
@@ -379,7 +392,7 @@ CREATE TABLE `spu` (
                        `discount_price` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
                        `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
                        `tags` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-                       `test` tinyint(3) unsigned DEFAULT '0',
+                       `sort_order` int(10) unsigned DEFAULT NULL,
                        `spu_theme_img` json DEFAULT NULL,
                        `for_theme_img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
                        PRIMARY KEY (`id`)
@@ -395,7 +408,7 @@ CREATE TABLE `spu_detail_img` (
                                   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
                                   `img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
                                   `spu_id` int(10) unsigned DEFAULT NULL,
-                                  `index` int(10) unsigned NOT NULL,
+                                  `sort_order` int(10) unsigned DEFAULT NULL,
                                   `create_time` datetime(3) DEFAULT CURRENT_TIMESTAMP(3),
                                   `update_time` datetime(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
                                   `delete_time` datetime(3) DEFAULT NULL,

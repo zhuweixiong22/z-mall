@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
         String requestUrl = request.getRequestURI();
         String method = request.getMethod();
         e.printStackTrace();
-        return UnifyResponse.error(99999, "服务器异常", method + " " + requestUrl);
+        return UnifyResponse.error(ResponseCode.ERROR.getCode(), ResponseCode.ERROR.getDesc(), method + " " + requestUrl);
     }
 
     /**

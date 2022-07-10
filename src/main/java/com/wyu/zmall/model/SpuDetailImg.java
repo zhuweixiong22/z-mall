@@ -19,7 +19,7 @@ public class SpuDetailImg extends BaseEntry{
 
     private Long spuId;
 
-    private Long index;
+    private Long sortOrder;
 
     public Long getId() {
         return id;
@@ -45,11 +45,11 @@ public class SpuDetailImg extends BaseEntry{
         this.spuId = spuId;
     }
 
-    public Long getIndex() {
-        return index;
+    public Long getSortOrder() {
+        return sortOrder;
     }
 
-    public void setIndex(Long index) {
-        this.index = index;
+    public void setSortOrder(Long sortOrder) {
+        this.sortOrder = sortOrder;
     }
 }

@@ -1,9 +1,7 @@
 package com.wyu.zmall.model;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author zwx
@@ -40,7 +38,7 @@ public class Spu extends BaseEntry{
 
     private String tags;
 
-    private Boolean test;
+    private Long sortOrder;
 
     //private Object spuThemeImg; 不需要这个字段
     private String forThemeImg;
@@ -162,12 +160,12 @@ public class Spu extends BaseEntry{
         this.tags = tags;
     }
 
-    public Boolean getTest() {
-        return test;
+    public Long getSortOrder() {
+        return sortOrder;
     }
 
-    public void setTest(Boolean test) {
-        this.test = test;
+    public void setSortOrder(Long sortOrder) {
+        this.sortOrder = sortOrder;
     }
 
     public String getForThemeImg() {

@@ -1,7 +1,17 @@
 package com.wyu.zmall.model;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.wyu.zmall.bo.Spec;
+import com.wyu.zmall.util.GenericAndJsonConverter;
+import com.wyu.zmall.util.ListAndJsonConverter;
+import com.wyu.zmall.util.MapAndJsonConverter;
+import org.springframework.util.CollectionUtils;
+
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author zwx
@@ -26,7 +36,11 @@ public class Sku extends BaseEntry{
 
     private Long spuId;
 
+    // @Convert(converter = ListAndJsonConverter.class) 用jpa这种， specs的类型就是List<Object>，List<Object>会更通用，但是也就失去了业务性，如果要求业务性，就要每个List<T>去写一个Converter
     private String specs;
+
+    //@Convert(converter = MapAndJsonConverter.class) // 打上Convert注解后还是爆红是因为IDEA识别问题 用jpa这种， test的类型就是Object
+    //private String test;
 
     private String code;
 
@@ -35,6 +49,15 @@ public class Sku extends BaseEntry{
     private Long categoryId;
 
     private Long rootCategoryId;
+
+/*    public Spec getTest() {
+        return GenericAndJsonConverter.jsonToObject(this.test, Spec.class);
+    }
+
+    public void setTest(Spec test) {
+        this.test = GenericAndJsonConverter.objectToJson(test);
+    }
+    */
 
     public Long getId() {
         return id;
@@ -92,12 +115,16 @@ public class Sku extends BaseEntry{
         this.spuId = spuId;
     }
 
-    public String getSpecs() {
-        return specs;
+    public List<Spec> getSpecs() {
+        return GenericAndJsonConverter.jsonToObject(this.specs, new TypeReference<List<Spec>>() {
+        });
     }
 
-    public void setSpecs(String specs) {
-        this.specs = specs;
+    public void setSpecs(List<Spec> specs) {
+        if (CollectionUtils.isEmpty(specs)) {
+            return;
+        }
+        this.specs = GenericAndJsonConverter.objectToJson(specs);
     }
 
     public String getCode() {

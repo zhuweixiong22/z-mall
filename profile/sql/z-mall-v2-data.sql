@@ -175,7 +175,7 @@ CREATE TABLE `category` (
                             `is_root` tinyint(3) unsigned NOT NULL DEFAULT '0',
                             `parent_id` int(10) unsigned DEFAULT NULL,
                             `img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-                            `index` int(10) unsigned DEFAULT NULL,
+                            `sort_order` int(10) unsigned DEFAULT NULL,
                             `online` int(10) unsigned DEFAULT '1',
                             `level` int(10) unsigned DEFAULT NULL,
                             PRIMARY KEY (`id`)
@@ -473,7 +473,7 @@ CREATE TABLE `spu` (
                        `discount_price` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
                        `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
                        `tags` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-                       `test` tinyint(3) unsigned DEFAULT '0',
+                       `sort_order` int(10) unsigned DEFAULT NULL,
                        `spu_theme_img` json DEFAULT NULL,
                        `for_theme_img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
                        PRIMARY KEY (`id`)
@@ -494,7 +494,7 @@ CREATE TABLE `spu_detail_img` (
                                   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
                                   `img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
                                   `spu_id` int(10) unsigned DEFAULT NULL,
-                                  `index` int(10) unsigned NOT NULL,
+                                  `sort_order` int(10) unsigned DEFAULT NULL,
                                   `create_time` datetime(3) DEFAULT CURRENT_TIMESTAMP(3),
                                   `update_time` datetime(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
                                   `delete_time` datetime(3) DEFAULT NULL,
