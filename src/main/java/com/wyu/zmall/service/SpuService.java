@@ -3,8 +3,6 @@ package com.wyu.zmall.service;
 import com.wyu.zmall.model.Spu;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-
 /**
  * @author zwx
  * @date 2022-07-04 15:39
@@ -12,5 +10,7 @@ import java.util.List;
 public interface SpuService {
     Spu getSpuById(Long id);
 
-    Page<Spu> getLatestPagingSpu(Integer pageNum, Integer pageSize);
+    Page<Spu> getLatestSpuList(Integer pageNum, Integer pageSize);
+
+    Page<Spu> getSpuListByCategory(Long cid, Boolean isRoot, Integer pageNum, Integer pageSize);
 }

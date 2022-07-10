@@ -100,7 +100,7 @@ public class GlobalExceptionHandler {
         // ConstraintViolationException自带的getMessage()也是可以用的，如果对错误信息没有严格的格式要求可以不用通过这种循环来自定义拼接
         StringBuilder errorMsg = new StringBuilder();
         for (ConstraintViolation<?> error : e.getConstraintViolations()) {
-            errorMsg.append(error.getMessageTemplate()).append(";");
+            errorMsg.append(error.getMessage()).append(";");
         }
 
         return UnifyResponse.error(ResponseCode.PARAM_ERROR.getCode(), errorMsg.toString(), method + " " + requestUrl);

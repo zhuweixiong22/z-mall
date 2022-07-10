@@ -125,6 +125,11 @@ CREATE TABLE `brand` (
 
 -- ----------------------------
 -- Table structure for category
+-- 该项目只有两级分类
+-- index（sort_order） : 分类可能也需要排序 运营手段
+-- online：也可能用到下降整个分类
+-- level：如果设计多级分类的话，可以标注分类级别 可以简化查询，没有level其实也能查出来，这个项目没有用到这个字段
+-- is_root；是否冗余
 -- ----------------------------
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
@@ -352,6 +357,8 @@ CREATE TABLE `spec_value` (
 -- discount_price：折扣价格和price一样是折扣价格
 -- tags: 小标签（可以设置成一对多）再提取出来一张表，这里选择只用一个字段使用一些符号拼接起来，优点：减少一次查询 缺点：更新麻烦，某些情况只能先查询再更改
 -- test：无意义
+-- 为什么会有两个category_id，一个是root_category_id，是因为业务需要，一个是需要根据一级分类查spu，一个是根据二级分类查spu
+-- 如果只有二级分类id，我们要查出一级分类下的所有商品是非常麻烦的，要先查出所有该一级下的二级category_id，再根据二级去查询
 -- ----------------------------
 -- ----------------------------
 DROP TABLE IF EXISTS `spu`;

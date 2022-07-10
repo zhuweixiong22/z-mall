@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class PageDozerVO<T, K> extends PageVO{
     /**
+     * 可以在JavaBean里适当的写简单的业务逻辑
      * 抽象出来 集合类型的VO转换
      * 由于Java的泛型是一种伪泛型，通过 PageDozerVO<T, K>中的 K去获取类型是非常难的，所以还要传入一个类型参数
      * 如果是其他语言其实是可以直接从 K 中获取到类型的

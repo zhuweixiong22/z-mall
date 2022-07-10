@@ -26,7 +26,7 @@ public class BannerController {
     private BannerService bannerService;
 
     @GetMapping("/test/{id1}")
-    public String test(@PathVariable(name = "id1") @Max(value = 10, message = "name不能超过10") Integer id, @RequestParam @Max(value = 11, message = "id2不能超过11") Integer id2) {
+    public String test(@PathVariable(name = "id1") @Max(value = 5, message = "{id.max}") Integer id, @RequestParam @Max(value = 11, message = "id2不能超过11") Integer id2) {
         System.out.println(id + " " + id2);
         //throw new Exception("error");
         //throw new ForbiddenException(10001);

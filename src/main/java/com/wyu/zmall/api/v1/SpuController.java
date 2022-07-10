@@ -12,11 +12,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
+import java.util.logging.SimpleFormatter;
 
 /**
  * @author zwx
@@ -34,10 +36,10 @@ public class SpuController {
     @ApiOperation("获取商品详情")
     @GetMapping("id/{id}/detail")
     public Spu getDetail(@PathVariable @Positive Long id) {
-        return spuService.getSpuById(id);
+        return this.spuService.getSpuById(id);
     }
 
-    @ApiOperation("获取最新商品列表")
+    @ApiOperation("获取最新商品概要信息列表")
     @GetMapping("/latest")
     public PageDozerVO<Spu, SpuSimplifyVO> getLatestSpuList(@RequestParam(required = false, defaultValue = "0") Integer start,
                                                             @RequestParam(required = false, defaultValue = "10") Integer count){
@@ -45,14 +47,26 @@ public class SpuController {
 
         Mapper mapper = DozerBeanMapperBuilder.buildDefault();
         PageCounter pageCounter = CommonUtil.PageParamConverter(start, count);
-        Page<Spu> spuPage = spuService.getLatestPagingSpu(pageCounter.getPageNum(), pageCounter.getPageSize());
+        Page<Spu> spuPage = this.spuService.getLatestSpuList(pageCounter.getPageNum(), pageCounter.getPageSize());
+
+        return new PageDozerVO<Spu, SpuSimplifyVO>(spuPage, SpuSimplifyVO.class);
+    }
+
+    @ApiOperation("根据分类id查询商品概要信息列表")
+    @GetMapping("/by/category/{id}")
+    public PageDozerVO<Spu, SpuSimplifyVO> getSpuListByCategoryId(@PathVariable(name = "id") @Positive(message = "{id.positive}") Long cid,
+                                                                  @RequestParam(name = "is_root", required = false, defaultValue = "false") Boolean isRoot,
+                                                                  @RequestParam(required = false,defaultValue = "0") Integer start,
+                                                                  @RequestParam(required = false, defaultValue = "10") Integer count){
+        PageCounter pageCounter = CommonUtil.PageParamConverter(start, count);
+        Page<Spu> spuPage = this.spuService.getSpuListByCategory(cid, isRoot, pageCounter.getPageNum(), pageCounter.getPageSize());
 
         return new PageDozerVO<Spu, SpuSimplifyVO>(spuPage, SpuSimplifyVO.class);
     }
 
     @GetMapping("/id/{id}/simplify")
-    public SpuSimplifyVO getSimplifySpu(@PathVariable @Positive Long id){
-        Spu spu = spuService.getSpuById(id);
+    public SpuSimplifyVO getSimplifySpu(@PathVariable @Positive(message = "{id.positive}") Long id){
+        Spu spu = this.spuService.getSpuById(id);
         SpuSimplifyVO spuSimplifyVO = new SpuSimplifyVO();
         BeanUtils.copyProperties(spu, spuSimplifyVO);
         return spuSimplifyVO;
