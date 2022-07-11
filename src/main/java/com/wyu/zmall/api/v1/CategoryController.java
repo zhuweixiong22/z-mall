@@ -1,7 +1,9 @@
 package com.wyu.zmall.api.v1;
 
 import com.wyu.zmall.model.Category;
+import com.wyu.zmall.model.GridCategory;
 import com.wyu.zmall.service.CategoryService;
+import com.wyu.zmall.service.GridCategoryService;
 import com.wyu.zmall.vo.CategoryAllVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,10 +29,18 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private GridCategoryService gridCategoryService;
+
     @ApiOperation("获取所有分类信息")
     @GetMapping("/all")
     public CategoryAllVO getAll(){
         return this.categoryService.getAll();
     }
 
+    @ApiOperation("获取所有宫格分类信息")
+    @GetMapping("/grid/all")
+    public List<GridCategory> getGridCategoryList(){
+        return this.gridCategoryService.getAll();
+    }
 }

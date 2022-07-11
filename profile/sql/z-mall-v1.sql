@@ -217,6 +217,8 @@ CREATE TABLE `coupon_type` (
 
 -- ----------------------------
 -- Table structure for grid_category
+-- 宫格分类
+-- 宫格的分类可以是二级也可以是二级的，如果是一级的则root_category_id不为null
 -- ----------------------------
 DROP TABLE IF EXISTS `grid_category`;
 CREATE TABLE `grid_category` (
