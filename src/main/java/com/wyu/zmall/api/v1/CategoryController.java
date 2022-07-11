@@ -1,6 +1,5 @@
 package com.wyu.zmall.api.v1;
 
-import com.wyu.zmall.model.Category;
 import com.wyu.zmall.model.GridCategory;
 import com.wyu.zmall.service.CategoryService;
 import com.wyu.zmall.service.GridCategoryService;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author zwx
@@ -34,13 +32,13 @@ public class CategoryController {
 
     @ApiOperation("获取所有分类信息")
     @GetMapping("/all")
-    public CategoryAllVO getAll(){
+    public CategoryAllVO getAll() {
         return this.categoryService.getAll();
     }
 
-    @ApiOperation("获取所有宫格分类信息")
+    @ApiOperation("获取所有宫格分类列表")
     @GetMapping("/grid/all")
-    public List<GridCategory> getGridCategoryList(){
+    public List<GridCategory> getGridCategoryList() {
         return this.gridCategoryService.getAll();
     }
 }

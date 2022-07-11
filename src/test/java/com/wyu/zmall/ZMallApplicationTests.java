@@ -1,10 +1,10 @@
 package com.wyu.zmall;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ZMallApplicationTests {
+public class ZMallApplicationTests {
 
     @Test
     void contextLoads() {
