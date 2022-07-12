@@ -1,6 +1,6 @@
 package com.wyu.zmall.service.impl;
 
-import com.wyu.zmall.enums.ResponseCode;
+import com.wyu.zmall.enums.ResultEnum;
 import com.wyu.zmall.exception.http.NotFoundException;
 import com.wyu.zmall.model.Spu;
 import com.wyu.zmall.repository.SpuRepository;
@@ -11,8 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author zwx
@@ -26,7 +24,7 @@ public class SpuServiceImpl implements SpuService {
     public Spu getSpuById(Long id) {
         Spu spu = this.spuRepository.findOneById(id);
         if (spu == null) {
-            throw new NotFoundException(ResponseCode.SPU_NOT_FOUND.getCode());
+            throw new NotFoundException(ResultEnum.SPU_NOT_FOUND.getCode());
         }
         return spu;
     }

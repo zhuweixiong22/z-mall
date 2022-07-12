@@ -512,6 +512,9 @@ CREATE TABLE `theme_spu` (
 
 -- ----------------------------
 -- Table structure for user
+-- wx_profile: 存储在微信的一些信息
+-- 如果加入会员系统的话，可以添加一个group字段：分组，比如青铜会员、黄金会员
+-- unify_uid: 可以放unionid
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (

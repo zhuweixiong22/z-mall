@@ -1,6 +1,6 @@
 package com.wyu.zmall.dto;
 
-import com.wyu.zmall.vaildators.PasswordEqual;
+import com.wyu.zmall.core.annotations.PasswordEqual;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 

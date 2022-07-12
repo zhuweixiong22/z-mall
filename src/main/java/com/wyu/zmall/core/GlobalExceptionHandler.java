@@ -1,6 +1,6 @@
 package com.wyu.zmall.core;
 
-import com.wyu.zmall.enums.ResponseCode;
+import com.wyu.zmall.enums.ResultEnum;
 import com.wyu.zmall.exception.http.HttpException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
         String requestUrl = request.getRequestURI();
         String method = request.getMethod();
         e.printStackTrace();
-        return UnifyResponse.error(ResponseCode.ERROR.getCode(), ResponseCode.ERROR.getDesc(), method + " " + requestUrl);
+        return UnifyResponse.error(ResultEnum.ERROR.getCode(), ResultEnum.ERROR.getDesc(), method + " " + requestUrl);
     }
 
     /**
@@ -51,12 +51,11 @@ public class GlobalExceptionHandler {
      * @param e
      */
     @ExceptionHandler(HttpException.class)
-    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<UnifyResponse> httpExceptionHandler(HttpServletRequest request, HttpException e) {
         String requestUrl = request.getRequestURI();
         String method = request.getMethod();
 
-        UnifyResponse unifyResponse = new UnifyResponse(e.getCode(), "通用错误", method + " " + requestUrl);
+        UnifyResponse unifyResponse = new UnifyResponse(e.getCode(), e.getMessage(), method + " " + requestUrl);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpStatus httpStatus = HttpStatus.resolve(e.getHttpStatusCode());
@@ -80,7 +79,7 @@ public class GlobalExceptionHandler {
 
         List<ObjectError> errors = e.getBindingResult().getAllErrors();
         String errorMsg = this.formatAllErrorMessages(errors);
-        return UnifyResponse.error(ResponseCode.PARAM_ERROR.getCode(), errorMsg, method + " " + requestUrl);
+        return UnifyResponse.error(ResultEnum.PARAM_ERROR.getCode(), errorMsg, method + " " + requestUrl);
     }
 
     /**
@@ -103,7 +102,7 @@ public class GlobalExceptionHandler {
             errorMsg.append(error.getMessage()).append(";");
         }
 
-        return UnifyResponse.error(ResponseCode.PARAM_ERROR.getCode(), errorMsg.toString(), method + " " + requestUrl);
+        return UnifyResponse.error(ResultEnum.PARAM_ERROR.getCode(), errorMsg.toString(), method + " " + requestUrl);
     }
 
     /**
@@ -120,7 +119,7 @@ public class GlobalExceptionHandler {
         String requestUrl = request.getRequestURI();
         String method = request.getMethod();
         String errorMsg = formatAllErrorMessages(e.getAllErrors());
-        return UnifyResponse.error(ResponseCode.PARAM_ERROR.getCode(), errorMsg, method + " " + requestUrl);
+        return UnifyResponse.error(ResultEnum.PARAM_ERROR.getCode(), errorMsg, method + " " + requestUrl);
     }
 
 

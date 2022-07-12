@@ -1,5 +1,6 @@
 package com.wyu.zmall.api.v1;
 
+import com.wyu.zmall.core.annotations.ScopeLevel;
 import com.wyu.zmall.dto.From;
 import com.wyu.zmall.dto.PersonDTO;
 import com.wyu.zmall.exception.http.ForbiddenException;
@@ -59,6 +60,7 @@ public class BannerController {
 
     @ApiOperation("根据名字获取Banner")
     @GetMapping("/name/{name}")
+    @ScopeLevel()
     public Banner getByName(@PathVariable @NotBlank String name) {
         // jpa很方便的一点是 可以直接将Banner的关联对象BannerItem可以查出来（添加导航属性）
         return bannerService.getByName(name);

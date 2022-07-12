@@ -13,3 +13,8 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+
+z-mall:
+  security:
+    jwt-key: novo
+    jwt-expired-time: 86400000

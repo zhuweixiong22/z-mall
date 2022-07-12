@@ -1,6 +1,6 @@
 package com.wyu.zmall.api.v1;
 
-import com.wyu.zmall.enums.ResponseCode;
+import com.wyu.zmall.enums.ResultEnum;
 import com.wyu.zmall.exception.http.NotFoundException;
 import com.wyu.zmall.model.Theme;
 import com.wyu.zmall.service.ThemeService;
@@ -50,6 +50,6 @@ public class ThemeController {
     @GetMapping("/name/{name}/with_spu")
     public Theme getThemeByNameWithSpu(@PathVariable(name = "name") String themeName){
         Optional<Theme> optionalTheme = this.themeService.getByName(themeName);
-        return optionalTheme.orElseThrow(()-> new NotFoundException(ResponseCode.BANNER_NOT_FOUND.getCode()));
+        return optionalTheme.orElseThrow(()-> new NotFoundException(ResultEnum.BANNER_NOT_FOUND.getCode()));
     }
 }

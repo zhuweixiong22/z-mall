@@ -15,4 +15,19 @@ public class HttpException extends RuntimeException {
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
+
+    public HttpException(){
+
+    }
+
+    public HttpException(Integer code, String desc) {
+        super(desc);
+        this.code = code;
+    }
+
+    public HttpException(Integer code, String desc, Integer httpStatusCode) {
+        super(desc);
+        this.code = code;
+        this.httpStatusCode = httpStatusCode;
+    }
 }

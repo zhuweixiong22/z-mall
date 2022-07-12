@@ -1,4 +1,4 @@
-package com.wyu.zmall.vaildators;
+package com.wyu.zmall.core.annotations;
 
 import com.wyu.zmall.dto.PersonDTO;
 

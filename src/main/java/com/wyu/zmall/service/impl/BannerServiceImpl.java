@@ -1,6 +1,6 @@
 package com.wyu.zmall.service.impl;
 
-import com.wyu.zmall.enums.ResponseCode;
+import com.wyu.zmall.enums.ResultEnum;
 import com.wyu.zmall.exception.http.NotFoundException;
 import com.wyu.zmall.model.Banner;
 import com.wyu.zmall.repository.BannerRepository;
@@ -22,7 +22,7 @@ public class BannerServiceImpl implements BannerService {
     public Banner getByName(String name) {
         Banner banner = bannerRepository.findOneByName(name);
         if (banner == null) {
-            throw new NotFoundException(ResponseCode.BANNER_NOT_FOUND.getCode());
+            throw new NotFoundException(ResultEnum.BANNER_NOT_FOUND.getCode());
         }
         return banner;
     }
