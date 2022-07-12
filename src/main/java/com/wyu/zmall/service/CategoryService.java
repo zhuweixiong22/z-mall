@@ -11,5 +11,5 @@ import java.util.Map;
  * @date 2022-07-10 23:39
  */
 public interface CategoryService {
-    CategoryAllVO getAll();
+    Map<String, List<Category>> getAll();
 }

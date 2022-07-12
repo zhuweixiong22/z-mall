@@ -46,7 +46,7 @@ public class ThemeController {
         return themeVOList;
     }
 
-    @ApiOperation("获取主题详细信息包含Spu")
+    @ApiOperation("获取主题详细信息(包含Spu)")
     @GetMapping("/name/{name}/with_spu")
     public Theme getThemeByNameWithSpu(@PathVariable(name = "name") String themeName){
         Optional<Theme> optionalTheme = this.themeService.getByName(themeName);

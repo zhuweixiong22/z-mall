@@ -38,6 +38,6 @@ public class Theme extends BaseEntry{
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "theme_spu", joinColumns = @JoinColumn(name = "theme_id"), inverseJoinColumns = @JoinColumn(name = "spu_id"))
-    // joinColumns是关系被维护端（theme）的中间表外键
+    // joinColumns是关系维护端（theme）的中间表外键
     private List<Spu> spuList;
 }

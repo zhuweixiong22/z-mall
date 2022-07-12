@@ -21,12 +21,12 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
 
     @Override
-    public CategoryAllVO getAll() {
+    public Map<String, List<Category>> getAll() {
         List<Category> roots = this.categoryRepository.findAllByIsRoot(true);
         List<Category> subs = this.categoryRepository.findAllByIsRoot(false);
         Map<String, List<Category>> map = new HashMap<>();
         map.put("root", roots);
         map.put("sub", subs);
-        return new CategoryAllVO(map);
+        return map;
     }
 }

@@ -30,7 +30,7 @@ public class PageDozerVO<T, K> extends PageVO{
         List<K> targetItems = new ArrayList<>();
 
         sourceItems.forEach(source ->{
-            // 传入源对象和源对象的类型 --> 得到目标对象
+            // 传入源对象和目标对象的类型 --> 得到目标对象
             K target = mapper.map(source, classK);
             targetItems.add(target);
         });

@@ -19,6 +19,11 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
 -- Table structure for activity
+-- 优惠券的基本组织单位：活动
+-- 活动和优惠券的start_time、end_time不一样，可以理解为活动的start_time、end_time是可以领取优惠券的开始时间和结束时间，并非使用时间
+-- entrance_img：活动入口图片
+-- internal_top_img：进入活动后顶部的图片
+--
 -- ----------------------------
 DROP TABLE IF EXISTS `activity`;
 CREATE TABLE `activity` (
@@ -51,6 +56,7 @@ CREATE TABLE `activity_category` (
 
 -- ----------------------------
 -- Table structure for activity_coupon
+-- 活动和优惠券是多对多
 -- ----------------------------
 DROP TABLE IF EXISTS `activity_coupon`;
 CREATE TABLE `activity_coupon` (
@@ -150,6 +156,16 @@ CREATE TABLE `category` (
 
 -- ----------------------------
 -- Table structure for coupon
+-- activity_id: 活动id
+-- start_time、end_time ：优惠券的使用时间
+-- full_money：用于满减券 满多少
+-- minus：用于满减券 减多少
+-- rate：用于折扣券 折扣比率
+-- remark：优惠券的说明，描述只能用于什么什么
+-- whole_store：是否全场券，使用范围
+-- type：优惠券类型
+-- 这里漏了考虑一种优惠券类型：新人优惠券，也就是优惠券的使用时间是动态的，不是固定的，可以添加一个有效期字段（整型天数就可以），再根据user_coupon表中的领取时间就可以算过过期时间。
+-- activity_id: 这个字段可以将activity和coupon看成一对多容易处理
 -- ----------------------------
 DROP TABLE IF EXISTS `coupon`;
 CREATE TABLE `coupon` (
@@ -161,10 +177,11 @@ CREATE TABLE `coupon` (
                           `full_money` decimal(10,2) DEFAULT NULL,
                           `minus` decimal(10,2) DEFAULT NULL,
                           `rate` decimal(10,2) DEFAULT NULL,
-                          `type` smallint(6) NOT NULL COMMENT '1. 满减券 2.折扣券 3.无门槛券 4.满金额折扣券',
+                          `type` smallint(6) NOT NULL COMMENT '1. 满减券 2.折扣券 3.无门槛券（无金额门槛） 4.满金额折扣券',
                           `create_time` datetime(3) DEFAULT CURRENT_TIMESTAMP(3),
                           `update_time` datetime(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
                           `delete_time` datetime(3) DEFAULT NULL,
+                          `valid_time` int(10) unsigned DEFAULT NULL,
                           `activity_id` int(10) unsigned DEFAULT NULL,
                           `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
                           `whole_store` tinyint(3) unsigned DEFAULT '0',
@@ -535,6 +552,9 @@ CREATE TABLE `user` (
 
 -- ----------------------------
 -- Table structure for user_coupon
+-- 该表是有实际业务意义的中间表
+-- create_time：改用户领取优惠券的时间
+-- order_id：如果该优惠券已使用，记录用于哪个订单
 -- ----------------------------
 DROP TABLE IF EXISTS `user_coupon`;
 CREATE TABLE `user_coupon` (

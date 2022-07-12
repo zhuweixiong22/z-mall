@@ -205,6 +205,7 @@ CREATE TABLE `coupon` (
                           `create_time` datetime(3) DEFAULT CURRENT_TIMESTAMP(3),
                           `update_time` datetime(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
                           `delete_time` datetime(3) DEFAULT NULL,
+                          `valid_time` int(10) unsigned DEFAULT NULL,
                           `activity_id` int(10) unsigned DEFAULT NULL,
                           `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
                           `whole_store` tinyint(3) unsigned DEFAULT '0',
