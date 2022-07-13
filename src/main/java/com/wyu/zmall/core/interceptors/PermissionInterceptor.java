@@ -1,11 +1,16 @@
 package com.wyu.zmall.core.interceptors;
 
 import com.auth0.jwt.interfaces.Claim;
+import com.wyu.zmall.core.LocalUserThreadHolder;
 import com.wyu.zmall.core.annotations.ScopeLevel;
 import com.wyu.zmall.enums.ResultEnum;
 import com.wyu.zmall.exception.http.HttpException;
+import com.wyu.zmall.model.User;
+import com.wyu.zmall.service.UserService;
 import com.wyu.zmall.util.TokenUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -20,6 +25,9 @@ import java.util.Map;
  * @date 2022-07-11 23:32
  */
 public class PermissionInterceptor implements HandlerInterceptor {
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 拦截器逻辑：
@@ -57,7 +65,11 @@ public class PermissionInterceptor implements HandlerInterceptor {
         }
         // 校验
         Map<String, Claim> claims = TokenUtil.verifyToken(tokens[1]);
-        return this.hasPermission(scopeLevel, claims);
+        boolean isValid = this.hasPermission(scopeLevel, claims);
+        if (isValid) {
+            this.setToThreadLocal(claims);
+        }
+        return isValid;
     }
 
     @Override
@@ -67,6 +79,8 @@ public class PermissionInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        // TODO 非常适合调用clear释放当前资源的时机
+        LocalUserThreadHolder.clear();
         HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
     }
 
@@ -94,6 +108,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
     private void setToThreadLocal(Map<String, Claim> claims) {
         Long uid = claims.get("uid").asLong();
         Integer scope = claims.get("scope").asInt();
-
+        User user = this.userService.getUserById(uid);
+        LocalUserThreadHolder.setLocalUser(user, scope);
     }
 }

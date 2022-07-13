@@ -1,9 +1,13 @@
 package com.wyu.zmall.core;
 
+import com.wyu.zmall.enums.ResultEnum;
+import lombok.Data;
+
 /**
  * @author zwx
  * @date 2022-06-27 17:37
  */
+@Data
 public class UnifyResponse {
     private Integer code;
     private String msg;
@@ -19,27 +23,8 @@ public class UnifyResponse {
         return new UnifyResponse(code, msg, request);
     }
 
-    public Integer getCode() {
-        return code;
-    }
 
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public String getRequest() {
-        return request;
-    }
-
-    public void setRequest(String request) {
-        this.request = request;
+    public static UnifyResponse success() {
+        return new UnifyResponse(ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getDesc(), null);
     }
 }

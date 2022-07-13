@@ -31,4 +31,13 @@ public class UserCoupon {
 
     private Date updateTime;
 
+    public UserCoupon() {
+    }
+
+    public UserCoupon(Long userId, Long couponId, Integer status, Date createTime) {
+        this.userId = userId;
+        this.couponId = couponId;
+        this.status = status;
+        this.createTime = createTime;
+    }
 }

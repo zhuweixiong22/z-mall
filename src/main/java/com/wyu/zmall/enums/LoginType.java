@@ -2,6 +2,9 @@ package com.wyu.zmall.enums;
 
 import lombok.Getter;
 
+import java.util.Objects;
+import java.util.stream.Stream;
+
 /**
  * @author zwx
  * @date 2022-07-11 17:31
@@ -22,4 +25,12 @@ public enum LoginType {
         this.code = code;
         this.desc = desc;
     }
+
+    public static LoginType toType(Integer code) {
+        return Stream.of(values())
+                .filter(loginType-> Objects.equals(loginType.getCode(), code))
+                .findAny()
+                .orElse(null);
+    }
+
 }
