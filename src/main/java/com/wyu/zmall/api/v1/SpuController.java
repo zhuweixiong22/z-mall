@@ -43,7 +43,6 @@ public class SpuController {
                                                             @RequestParam(required = false, defaultValue = "10") Integer count){
         // 序列化返回的时候会读取所有的公共字段
 
-        Mapper mapper = DozerBeanMapperBuilder.buildDefault();
         PageCounter pageCounter = CommonUtil.PageParamConverter(start, count);
         Page<Spu> spuPage = this.spuService.getLatestSpuList(pageCounter.getPageNum(), pageCounter.getPageSize());
 

@@ -90,4 +90,10 @@ public class PermissionInterceptor implements HandlerInterceptor {
         }
         return true;
     }
+
+    private void setToThreadLocal(Map<String, Claim> claims) {
+        Long uid = claims.get("uid").asLong();
+        Integer scope = claims.get("scope").asInt();
+
+    }
 }
