@@ -2,6 +2,7 @@ package com.wyu.zmall.vo;
 
 import com.wyu.zmall.model.Category;
 import lombok.Data;
+import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 

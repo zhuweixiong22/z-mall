@@ -8,6 +8,7 @@ import com.wyu.zmall.enums.ResultEnum;
 import com.wyu.zmall.exception.http.HttpException;
 import com.wyu.zmall.model.Coupon;
 import com.wyu.zmall.service.CouponService;
+import com.wyu.zmall.vo.CouponCategoryVO;
 import com.wyu.zmall.vo.CouponVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.Positive;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author zwx
@@ -98,5 +100,15 @@ public class CouponController {
             couponVOList.add(couponVO);
         });
         return couponVOList;
+    }
+
+    @ApiOperation("结算页面获取用户可用优惠券(包含分类信息)")
+    @ScopeLevel()
+    @GetMapping("/myself/available/with_category")
+    public List<CouponCategoryVO> getCouponWithCategory() {
+        Long uid = LocalUserThreadHolder.getLocalUserId();
+        List<Coupon> couponList = this.couponService.getMyAvailableCoupons(uid);
+        // 两种流的形式，和上面那个接口
+        return couponList.stream().map(coupon -> {return new CouponCategoryVO(coupon);}).collect(Collectors.toList());
     }
 }

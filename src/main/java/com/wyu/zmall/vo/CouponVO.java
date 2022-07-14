@@ -1,6 +1,9 @@
 package com.wyu.zmall.vo;
 
+import com.wyu.zmall.model.Category;
+import com.wyu.zmall.model.Coupon;
 import lombok.Data;
+import org.springframework.beans.BeanUtils;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -36,5 +39,13 @@ public class CouponVO {
     private String remark;
 
     private Boolean wholeStore;
+
+    public CouponVO(Coupon coupon) {
+        BeanUtils.copyProperties(coupon, this);
+    }
+
+    public CouponVO() {
+
+    }
 
 }
